@@ -22,6 +22,19 @@ class VendingMachineManager {
     var stockList: [(key: Beverage, value: Int)] {
         vendingMachine.stockList
     }
+    
+    func saveData() {
+        print("save!")
+        let data = try! JSONEncoder().encode(vendingMachine)
+        UserDefaults.standard.set(data, forKey: "vendingMachine")
+    }
+    
+    func loadData() {
+        print("load!")
+        if let data = UserDefaults.standard.object(forKey: "vendingMachine") as? Data {
+          vendingMachine = try! JSONDecoder().decode(VendingMachine.self, from: data)
+        }
+    }
 }
 
 extension VendingMachineManager: VendingMachineManagementDelegate {

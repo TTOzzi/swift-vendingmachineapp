@@ -17,6 +17,10 @@ class Milk: Beverage {
         super.init(brand: brand, amount: amount, price: price, name: name, calorie: calorie, saleablePeriod: saleablePeriod)
     }
     
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+    
     func isLowFat() -> Bool {
         return fatRatio < Milk.lowFatStandard
     }

@@ -15,4 +15,8 @@ class Fanta: Soda {
         self.flavor = flavor
         super.init(brand: brand, amount: amount, price: price, name: name, calorie: calorie, saleablePeriod: saleablePeriod, sugarContent: sugarContent)
     }
+    
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
 }

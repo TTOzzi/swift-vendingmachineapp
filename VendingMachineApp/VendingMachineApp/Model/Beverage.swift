@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Beverage {
+class Beverage: Codable {
     static let lowCalorieStandard = 30.0
     private let brand: String
     private let amount: Int

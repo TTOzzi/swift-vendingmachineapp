@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class Money {
+final class Money: Codable {
     private var amount: Int
     
     init(amount: Int) {

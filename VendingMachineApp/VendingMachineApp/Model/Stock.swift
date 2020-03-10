@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Stock {
+struct Stock: Codable {
     private var beverages = [Beverage]()
     
     mutating func add(beverage: Beverage) {

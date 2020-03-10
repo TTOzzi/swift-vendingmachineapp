@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct VendingMachine {
+struct VendingMachine: Codable {
     private var stock = Stock() {
         didSet {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StockChanged"), object: self, userInfo: ["stock":stockList])
