@@ -16,6 +16,16 @@ class Coffee: Beverage {
         super.init(brand: brand, amount: amount, price: price, name: name, calorie: calorie, saleablePeriod: saleablePeriod, isHot: isHot)
     }
     
+    required init?(coder: NSCoder) {
+        self.caffeineContent = coder.decodeDouble(forKey: "caffeineContent")
+        super.init(coder: coder)
+    }
+    
+    override func encode(with coder: NSCoder) {
+        super.encode(with: coder)
+        coder.encode(caffeineContent, forKey: "caffeieneContent")
+    }
+    
     func isDecaffeinated() -> Bool {
         return caffeineContent < 10
     }
