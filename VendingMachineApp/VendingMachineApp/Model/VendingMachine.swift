@@ -9,11 +9,7 @@
 import Foundation
 
 class VendingMachine: NSObject, NSCoding {
-    private var stock = Stock() {
-        didSet {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StockChanged"), object: self, userInfo: ["stock":stockList])
-        }
-    }
+    private var stock = Stock()
     private var money = Money() {
         didSet {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MoneyChanged"), object: self, userInfo: ["balance":"\(money)"])
@@ -57,6 +53,7 @@ class VendingMachine: NSObject, NSCoding {
 
     func addBeverage(beverage: Beverage) {
         stock.add(beverage: beverage)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StockChanged"), object: self, userInfo: ["stock":stockList])
     }
     
     func checkBalance() -> Money {
@@ -74,6 +71,7 @@ class VendingMachine: NSObject, NSCoding {
         let servedBeverage = stock.serve(beverage: beverage)
         money -= servedBeverage.price
         purchaseHistory.append(servedBeverage)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StockChanged"), object: self, userInfo: ["stock":stockList])
         return beverage
     }
 }
