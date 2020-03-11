@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var manager = VendingMachineManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        print("app start")
+        manager.loadData()
         return true
     }
 
@@ -27,6 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     }
 
+    func applicationWillTerminate(_ application: UIApplication) {
+        print("app terminate")
+        manager.saveData()
+    }
 
 }
 

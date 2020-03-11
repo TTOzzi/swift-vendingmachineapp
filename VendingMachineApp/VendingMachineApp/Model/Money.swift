@@ -8,21 +8,26 @@
 
 import Foundation
 
-final class Money: Codable {
+final class Money: NSObject, NSCoding {
+    override var description: String {
+        "\(amount)"
+    }
     private var amount: Int
-    
+
     init(amount: Int) {
         self.amount = amount
     }
     
-    convenience init() {
+    init?(coder: NSCoder) {
+        self.amount = coder.decodeInteger(forKey: "amount")
+    }
+    
+    convenience override init() {
         self.init(amount: 0)
     }
-}
-
-extension Money: CustomStringConvertible {
-    var description: String {
-        "\(amount)"
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(amount, forKey: "amount")
     }
 }
 

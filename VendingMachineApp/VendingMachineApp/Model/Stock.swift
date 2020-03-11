@@ -8,14 +8,27 @@
 
 import Foundation
 
-struct Stock: Codable {
-    private var beverages = [Beverage]()
+class Stock: NSObject, NSCoding {
+    private var beverages: [Beverage]
     
-    mutating func add(beverage: Beverage) {
+    override init() {
+        self.beverages = [Beverage]()
+    }
+    
+    required init?(coder: NSCoder) {
+        guard let beverages = coder.decodeObject(forKey: "beverages") as? [Beverage] else { return nil }
+        self.beverages = beverages
+    }
+
+    func encode(with coder: NSCoder) {
+        coder.encode(beverages, forKey: "beverages")
+    }
+
+    func add(beverage: Beverage) {
         beverages.append(beverage)
     }
     
-    mutating func serve(beverage: Beverage) -> Beverage {
+    func serve(beverage: Beverage) -> Beverage {
         return beverages.remove(at: beverages.firstIndex(of: beverage)!)
     }
         

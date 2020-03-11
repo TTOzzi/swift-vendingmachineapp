@@ -32,26 +32,23 @@ class Beverage: NSObject, NSCoding {
     
     required init?(coder: NSCoder) {
         guard let brand = coder.decodeObject(forKey: "brand") as? String,
-            let amount = coder.decodeObject(forKey: "amount") as? Int,
             let price = coder.decodeObject(forKey: "price") as? Money,
             let name = coder.decodeObject(forKey: "name") as? String,
-            let calorie = coder.decodeObject(forKey: "calorie") as? Double,
-            let isHot = coder.decodeObject(forKey: "isHot") as? Bool,
             let manufacturingDate = coder.decodeObject(forKey: "manufacturingDate") as? Date,
             let expirationDate = coder.decodeObject(forKey: "expirationDate") as? Date else { return nil }
         self.brand = brand
-        self.amount = amount
+        self.amount = coder.decodeInteger(forKey: "beverageAmount")
         self.price = price
         self.name = name
-        self.calorie = calorie
-        self.isHot = isHot
+        self.calorie = coder.decodeDouble(forKey: "calorie")
+        self.isHot = coder.decodeBool(forKey: "isHot")
         self.manufacturingDate = manufacturingDate
         self.expirationDate = expirationDate
     }
     
     func encode(with coder: NSCoder) {
         coder.encode(brand, forKey: "brand")
-        coder.encode(amount, forKey: "amount")
+        coder.encode(amount, forKey: "beverageAmount")
         coder.encode(price, forKey: "price")
         coder.encode(name, forKey: "name")
         coder.encode(calorie, forKey: "calorie")
