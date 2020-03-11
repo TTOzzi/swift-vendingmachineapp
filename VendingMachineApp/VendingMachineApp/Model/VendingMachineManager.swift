@@ -25,12 +25,17 @@ class VendingMachineManager {
     
     func saveData() {
         print("save!")
-        let data = try! JSONEncoder().encode(vendingMachine)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try! encoder.encode(vendingMachine)
+        print(String(data: data, encoding: .utf8) ?? "")
         UserDefaults.standard.set(data, forKey: "vendingMachine")
     }
     
     func loadData() {
         print("load!")
+        let a = vendingMachine.stockList.first!.key as! StrawberryMilk
+        print(a.strawberryContent)
         if let data = UserDefaults.standard.object(forKey: "vendingMachine") as? Data {
           vendingMachine = try! JSONDecoder().decode(VendingMachine.self, from: data)
         }

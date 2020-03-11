@@ -9,7 +9,7 @@
 import Foundation
 
 class StrawberryMilk: Milk {
-    private let strawberryContent: Double
+    let strawberryContent: Double
     
     private enum CodingKeys: String, CodingKey {
         case strawberryContent
