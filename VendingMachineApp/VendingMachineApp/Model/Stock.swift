@@ -11,6 +11,10 @@ import Foundation
 struct Stock: Codable {
     private var beverages = [Beverage]()
     
+    private enum CodingKeys: String, CodingKey {
+        case beverages
+    }
+    
     mutating func add(beverage: Beverage) {
         beverages.append(beverage)
     }

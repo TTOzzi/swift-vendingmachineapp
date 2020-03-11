@@ -19,6 +19,10 @@ class Beverage: Codable {
     private let manufacturingDate: Date
     private let expirationDate: Date
     
+    private enum CodingKeys: String, CodingKey {
+        case brand, amount, price, name, calorie, isHot, manufacturingDate, expirationDate
+    }
+    
     init(brand: String, amount: Int, price: Money, name: String, calorie: Double, saleablePeriod: Int, isHot:Bool = false) {
         self.brand = brand
         self.amount = amount
@@ -28,6 +32,30 @@ class Beverage: Codable {
         self.manufacturingDate = Date()
         self.expirationDate = Calendar.current.date(byAdding: .day, value: saleablePeriod, to: manufacturingDate)!
         self.isHot = isHot
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.brand = try container.decode(String.self, forKey: .brand)
+        self.amount = try container.decode(Int.self, forKey: .amount)
+        self.price = try container.decode(Money.self, forKey: .price)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.calorie = try container.decode(Double.self, forKey: .calorie)
+        self.manufacturingDate = try container.decode(Date.self, forKey: .manufacturingDate)
+        self.expirationDate = try container.decode(Date.self, forKey: .expirationDate)
+        self.isHot = try container.decode(Bool.self, forKey: .isHot)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(brand, forKey: .brand)
+        try container.encode(amount, forKey: .amount)
+        try container.encode(price, forKey: .price)
+        try container.encode(name, forKey: .name)
+        try container.encode(calorie, forKey: .calorie)
+        try container.encode(manufacturingDate, forKey: .manufacturingDate)
+        try container.encode(expirationDate, forKey: .expirationDate)
+        try container.encode(isHot, forKey: .isHot)
     }
     
     func isLowCalorie() -> Bool {

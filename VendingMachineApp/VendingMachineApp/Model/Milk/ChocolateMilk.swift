@@ -11,12 +11,18 @@ import Foundation
 class ChocolateMilk: Milk {
     private let chocolateContent: Double
     
+    private enum CodingKeys: String, CodingKey {
+        case chocolateContent
+    }
+    
     init(brand: String, amount: Int, price: Money, name: String, calorie: Double, saleablePeriod: Int, fatRatio: Double, chocolateContent: Double) {
         self.chocolateContent = chocolateContent
         super.init(brand: brand, amount: amount, price: price, name: name, calorie: calorie, saleablePeriod: saleablePeriod, fatRatio: fatRatio)
     }
     
     required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.chocolateContent = try container.decode(Double.self, forKey: .chocolateContent)
+        try super.init(from: decoder)
     }
 }
